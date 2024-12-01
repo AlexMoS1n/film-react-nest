@@ -7,15 +7,19 @@ import { CreateFilmDTO } from './dto/films.dto';
 export class FilmsService {
   constructor(private readonly filmsRepository: FilmsRepository) {}
 
-  async findAll() {
+  async getAllFilms() {
     return this.filmsRepository.findAllFilms();
   }
 
-  async findById(id: string) {
-    return this.filmsRepository.findFilmById(id);
+  async getScheduleFilm(id: string) {
+    const film = (await this.filmsRepository.findFilmById(id)).toObject();
+    return {
+      total: film.schedule.length,
+      items: film.schedule,
+    };
   }
 
-  async create(data: CreateFilmDTO) {
+  async getNewFilm(data: CreateFilmDTO) {
     return this.filmsRepository.createNewFilm(data);
   }
 }

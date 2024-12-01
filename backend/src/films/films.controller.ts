@@ -9,16 +9,16 @@ export class FilmsController {
 
   @Get()
   getFilms() {
-    return this.filmsService.findAll();
+    return this.filmsService.getAllFilms();
   }
 
   @Get(':id/schedule')
-  getScheduleFilm(@Param('id') id: string) {
-    return this.filmsService.findById(id);
+  getSchedule(@Param('id') id: string) {
+    return this.filmsService.getScheduleFilm(id);
   }
 
-  @Post('/create')
-  create(@Body() newFilm: CreateFilmDTO) {
-    return this.filmsService.create(newFilm);
+  @Post('create')
+  createFilm(@Body() newFilm: CreateFilmDTO) {
+    return this.filmsService.getNewFilm(newFilm);
   }
 }
