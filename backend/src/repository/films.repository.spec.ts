@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { FilmsRepository } from './films.repository';
+import { FilmsRepository } from './filmsMongoDB.repository';
 
 describe('FilmsRepository', () => {
   let provider: FilmsRepository;

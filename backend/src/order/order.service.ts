@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { BadRequestException, ConflictException } from '@nestjs/common';
 
-import { FilmsRepository } from '../repository/films.repository';
+import { FilmsRepositoryMongoDB } from '../repository/filmsMongoDB.repository';
 import { GetTicketDTO, GetOrderDTO } from './dto/order.dto';
 
 @Injectable()
 export class OrderService {
-  constructor(private readonly filmsRepository: FilmsRepository) {}
+  constructor(private readonly filmsRepository: FilmsRepositoryMongoDB) {}
 
   async createOrder(
     orderData: GetOrderDTO,
@@ -20,7 +20,6 @@ export class OrderService {
         ticket.film,
         ticket.session,
       );
-      console.log(scheduleIndex);
       const place = `${ticket.row}:${ticket.seat}`;
 
       if (film.schedule[scheduleIndex].taken.includes(place)) {

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { FilmsRepository } from '../repository/films.repository';
+import { FilmsRepository } from '../repository/filmsMongoDB.repository';
 import { CreateFilmDTO } from './dto/films.dto';
 
 @Injectable()

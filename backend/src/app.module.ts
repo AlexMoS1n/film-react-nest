@@ -10,7 +10,8 @@ import { OrderController } from './order/order.controller';
 import { FilmsService } from './films/films.service';
 import { OrderService } from './order/order.service';
 import { Film, FilmSchema } from './films/schemas/film.schema';
-import { FilmsRepository } from './repository/films.repository';
+import { FilmsRepositoryMongoDB } from './repository/filmsMongoDB.repository';
+import { FilmsPostgreSQL } from './repository/filmsPostgreSQL.repository';
 
 @Module({
   imports: [
@@ -26,6 +27,12 @@ import { FilmsRepository } from './repository/films.repository';
     MongooseModule.forFeature([{ name: Film.name, schema: FilmSchema }]),
   ],
   controllers: [FilmsController, OrderController],
-  providers: [configProvider, FilmsService, OrderService, FilmsRepository],
+  providers: [
+    configProvider,
+    FilmsService,
+    OrderService,
+    FilmsRepositoryMongoDB,
+    FilmsPostgreSQL,
+  ],
 })
 export class AppModule {}
