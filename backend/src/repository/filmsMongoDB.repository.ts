@@ -11,7 +11,7 @@ import { GetFilmDTO, CreateFilmDTO } from 'src/films/dto/films.dto';
 import { Film, FilmDocument } from '../films/schemas/film.schema';
 
 @Injectable()
-export class FilmsRepositoryMongoDB {
+export class FilmsMongoDBRepository {
   constructor(@InjectModel(Film.name) private filmModel: Model<Film>) {}
 
   private getFilmFromDataBaseFn(): (filmDataBase: GetFilmDTO) => GetFilmDTO {

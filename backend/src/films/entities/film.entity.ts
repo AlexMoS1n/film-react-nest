@@ -1,9 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { IsNumber, IsString, IsArray } from 'class-validator';
-import { Schedule } from './schedule.entity';
+import { ScheduleEntity } from './schedule.entity';
 
 @Entity('films')
-export class Film {
+export class FilmEntity {
   @PrimaryGeneratedColumn()
   id: string;
 
@@ -39,6 +39,8 @@ export class Film {
   @IsString()
   description: string;
 
-  @OneToMany(() => Schedule, (schedule) => schedule.film, { cascade: true })
-  schedule: Schedule[];
+  @OneToMany(() => ScheduleEntity, (schedule) => schedule.film, {
+    cascade: true,
+  })
+  schedule: ScheduleEntity[];
 }

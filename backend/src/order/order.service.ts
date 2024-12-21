@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { BadRequestException, ConflictException } from '@nestjs/common';
 
-import { FilmsRepositoryMongoDB } from '../repository/filmsMongoDB.repository';
+import { FilmsMongoDBRepository } from '../repository/filmsMongoDB.repository';
 import { GetTicketDTO, GetOrderDTO } from './dto/order.dto';
 
 @Injectable()
 export class OrderService {
-  constructor(private readonly filmsRepository: FilmsRepositoryMongoDB) {}
+  constructor(private readonly filmsRepository: FilmsMongoDBRepository) {}
 
   async createOrder(
     orderData: GetOrderDTO,
