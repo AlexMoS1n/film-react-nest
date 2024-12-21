@@ -54,7 +54,15 @@ export class FilmsPostgreSQLRepository {
         `Фильм с таким названием  '${film.title}' уже существует`,
       );
     }
-    const savedFilm = await this.filmRepository.save(film);
-    return savedFilm;
+    await this.filmRepository.insert(film);
+    return film;
+  }
+
+  async updateFilm(film: FilmEntity): Promise<void> {
+    try {
+      await this.filmRepository.save(film);
+    } catch (error) {
+      new BadRequestException(`Не удалось обновить фильм ${film.title}`);
+    }
   }
 }
