@@ -1,7 +1,8 @@
-import { Controller, Get, Param,/* Post, Body */} from '@nestjs/common';
+import { Controller, Get, Post, Param, Body } from '@nestjs/common';
 
 import { FilmsService } from './films.service';
-//import { CreateFilmDTO } from './dto/films.dto';
+import { CreateFilmDTO } from './dto/films.dto';
+import { FilmEntity } from './entities/film.entity';
 
 @Controller('films')
 export class FilmsController {
@@ -17,8 +18,8 @@ export class FilmsController {
     return this.filmsService.getScheduleFilm(id);
   }
 
-  /* @Post('create')
-  createFilm(@Body() newFilm: CreateFilmDTO) {
+  @Post('create')
+  createFilm(@Body() newFilm: CreateFilmDTO | FilmEntity) {
     return this.filmsService.getNewFilm(newFilm);
-  }*/
+  }
 }
