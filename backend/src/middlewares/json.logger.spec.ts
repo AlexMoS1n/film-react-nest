@@ -17,12 +17,12 @@ describe('JsonLogger tests', () => {
       .mockImplementation(() => {});
     const message = 'test text for json log';
     jsonLogger.log(message);
-    const item = JSON.stringify({
+    const result = JSON.stringify({
       level: 'log',
       message: message,
       optionalParams: [],
     });
-    expect(mockFunction).toHaveBeenCalledWith(item);
+    expect(mockFunction).toHaveBeenCalledWith(result);
   });
 
   it('.error()should be error in json format', () => {
@@ -31,23 +31,23 @@ describe('JsonLogger tests', () => {
       .mockImplementation(() => {});
     const message = 'test text for json error';
     jsonLogger.error(message);
-    const item = JSON.stringify({
+    const result = JSON.stringify({
       level: 'error',
       message: message,
       optionalParams: [],
     });
-    expect(mockFunction).toHaveBeenCalledWith(item);
+    expect(mockFunction).toHaveBeenCalledWith(result);
   });
 
   it('.warn()should be warn in json format', () => {
     const addMock = jest.spyOn(console, 'warn').mockImplementation(() => {});
     const message = 'test text for json warn';
     jsonLogger.warn(message);
-    const item = JSON.stringify({
+    const result = JSON.stringify({
       level: 'warn',
       message: message,
       optionalParams: [],
     });
-    expect(addMock).toHaveBeenCalledWith(item);
+    expect(addMock).toHaveBeenCalledWith(result);
   });
 });

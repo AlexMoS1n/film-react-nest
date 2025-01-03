@@ -14,8 +14,8 @@ describe('TSKVLogger tests', () => {
     const message = 'test text for tskv log';
     const optionalParams = 'test params';
     tskvLogger.log(message, optionalParams);
-    const item = `level=log\tmessage=${message}\toptionalParams=${optionalParams}\n`;
-    expect(mockFunction).toHaveBeenCalledWith(item);
+    const result = `level=log\tmessage=${message}\toptionalParams=${optionalParams}\n`;
+    expect(mockFunction).toHaveBeenCalledWith(result);
   });
 
   it('.error()should be error in tskv format', () => {
@@ -25,8 +25,8 @@ describe('TSKVLogger tests', () => {
     const message = 'test text for tskv error';
     const optionalParams = 'test params';
     tskvLogger.error(message, optionalParams);
-    const item = `level=error\tmessage=${message}\toptionalParams=${optionalParams}\n`;
-    expect(mockFunction).toHaveBeenCalledWith(item);
+    const result = `level=error\tmessage=${message}\toptionalParams=${optionalParams}\n`;
+    expect(mockFunction).toHaveBeenCalledWith(result);
   });
 
   it('.warn()should be warn in tskv format', () => {
@@ -36,7 +36,7 @@ describe('TSKVLogger tests', () => {
     const message = 'test text for tskv warn';
     const optionalParams = 'test params';
     tskvLogger.warn(message, optionalParams);
-    const item = `level=warn\tmessage=${message}\toptionalParams=${optionalParams}\n`;
-    expect(mockFunction).toHaveBeenCalledWith(item);
+    const result = `level=warn\tmessage=${message}\toptionalParams=${optionalParams}\n`;
+    expect(mockFunction).toHaveBeenCalledWith(result);
   });
 });
