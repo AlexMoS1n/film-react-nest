@@ -1,86 +1,48 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { FilmsController } from './films.controller';
 import { FilmsService } from './films.service';
-import { CreateFilmDTO } from './dto/films.dto';
+import { CreateFilmDTO, GetFilmDTO, GetScheduleDTO } from './dto/films.dto';
+import { FilmEntity } from './entities/film.entity';
 
 describe('FilmsController', () => {
   let controller: FilmsController;
   let service: FilmsService;
 
-  const arrMockFilms = [
-    {
-      id: '1',
-      title: 'Архитекторы общества',
-      schedule: [
-        {
-          id: 'f2e429b0-685d-41f8-a8cd-1d8cb63b99ce',
-          daytime: '2024-06-28T10:00:53+03:00',
-          hall: 0,
-          rows: 5,
-          seats: 10,
-          price: 350,
-          taken: [],
-        },
-        {
-          id: '5beec101-acbb-4158-adc6-d855716b44a8',
-          daytime: '2024-06-28T14:00:53+03:00',
-          hall: 1,
-          rows: 5,
-          seats: 10,
-          price: 350,
-          taken: [],
-        },
-      ],
-    },
-    {
-      id: '2',
-      title: 'Недостижимая утопия',
-      schedule: [
-        {
-          id: '9647fcf2-d0fa-4e69-ad90-2b23cff15449',
-          daytime: '2024-06-28T10:00:53+03:00',
-          hall: 0,
-          rows: 5,
-          seats: 10,
-          price: 350,
-          taken: [],
-        },
-        {
-          id: '9f2db237-01d0-463e-a150-89f30bfc4250',
-          daytime: '2024-06-28T14:00:53+03:00',
-          hall: 1,
-          rows: 5,
-          seats: 10,
-          price: 350,
-          taken: [],
-        },
-      ],
-    },
-  ];
+  const mockSchedule: GetScheduleDTO = {
+    id: 'schedule-id',
+    daytime: '2023-10-10T10:00:00Z',
+    hall: 1,
+    rows: 5,
+    seats: 100,
+    price: 10,
+    taken: [],
+  };
 
-  const newFilm: CreateFilmDTO = {
-    rating: 9,
+  const mockFilm: GetFilmDTO = {
+    id: 'film-id',
+    rating: 8.5,
     director: 'Харрисон Рид',
     tags: ['Рекомендуемые'],
-    image: '/bg3s.jpg',
-    cover: '/bg3c.jpg',
-    title: 'Недостижимая утопия',
-    about:
-      'Провокационный фильм-антиутопия, исследующий темы свободы, контроля и цены совершенства.',
-    description:
-      'Провокационный фильм-антиутопия режиссера Харрисона Рида. Действие фильма разворачивается в, казалось бы, идеальном обществе, и рассказывает о группе граждан, которые начинают подвергать сомнению систему. Фильм исследует темы свободы, контроля и цены совершенства.',
-    schedule: [
-      {
-        id: '9647fcf2-d0fa-4e69-ad90-2b23cff15449',
-        daytime: '2024-06-28T10:00:53+03:00',
-        hall: 0,
-        rows: 5,
-        seats: 10,
-        price: 350,
-        taken: [],
-      },
-    ],
+    image: 'http://example.com/image.jpg',
+    cover: 'http://example.com/cover.jpg',
+    title: 'Film Title',
+    about: 'About the film',
+    description: 'Description of the film',
+    schedule: [mockSchedule],
   };
+
+  const mockCreateFilmDTO: CreateFilmDTO = {
+    rating: 8.5,
+    director: 'Харрисон Рид',
+    tags: ['Рекомендуемые'],
+    image: 'http://example.com/image.jpg',
+    cover: 'http://example.com/cover.jpg',
+    title: 'Film Title New',
+    about: 'About the film',
+    description: 'Description of the film',
+    schedule: [mockSchedule],
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [FilmsController],
@@ -88,12 +50,9 @@ describe('FilmsController', () => {
     })
       .overrideProvider(FilmsService)
       .useValue({
-        getAllFilms: jest.fn().mockResolvedValue(arrMockFilms),
-        getScheduleFilm: jest.fn().mockResolvedValue({
-          total: arrMockFilms[1].schedule.length,
-          items: arrMockFilms[1].schedule,
-        }),
-        getNewFilm: jest.fn().mockResolvedValue(newFilm),
+        getAllFilms: jest.fn().mockResolvedValue([mockFilm]),
+        getScheduleFilm: jest.fn().mockResolvedValue(mockSchedule),
+        getNewFilm: jest.fn(),
       })
       .compile();
 
@@ -101,24 +60,52 @@ describe('FilmsController', () => {
     service = module.get<FilmsService>(FilmsService);
   });
 
-  it('.getFilms() should be return an array of films', async () => {
-    const result = await controller.getFilms();
-    expect(result).toEqual(arrMockFilms);
-    expect(service.getAllFilms).toHaveBeenCalled();
-  });
-
-  it('.getSchedule() should be return the schedule of a film', async () => {
-    const result = await controller.getSchedule('1');
-    expect(result).toEqual({
-      total: arrMockFilms[1].schedule.length,
-      items: arrMockFilms[1].schedule,
+  describe('.getFilms()', () => {
+    it('should be return all films', async () => {
+      const result = await controller.getFilms();
+      expect(result).toEqual([mockFilm]);
+      expect(service.getAllFilms).toHaveBeenCalled();
     });
-    expect(service.getScheduleFilm).toHaveBeenCalledWith('1');
   });
 
-  it('.createFilm() should be create a new film', async () => {
-    const result = await controller.createFilm(newFilm);
-    expect(result).toEqual(newFilm);
-    expect(service.getNewFilm).toHaveBeenCalledWith(newFilm);
+  describe('.getSchedule()', () => {
+    it('should be return schedule for a film', async () => {
+      const result = await controller.getSchedule('film-id');
+      expect(result).toEqual(mockSchedule);
+      expect(service.getScheduleFilm).toHaveBeenCalledWith('film-id');
+    });
+  });
+
+  describe('.createFilm()', () => {
+    it('should be create a new film with CreateFilmDTO', async () => {
+      (service.getNewFilm as jest.Mock).mockResolvedValue(mockFilm);
+
+      const result = await controller.createFilm(mockCreateFilmDTO);
+
+      expect(result).toEqual(mockFilm);
+      expect(service.getNewFilm).toHaveBeenCalledWith(mockCreateFilmDTO);
+    });
+
+    it('should be create a new film with FilmEntity', async () => {
+      const filmEntity: FilmEntity = {
+        id: 'film-id',
+        rating: 8.5,
+        director: 'Director Name',
+        tags: ['Action', 'Drama'],
+        image: 'http://example.com/image.jpg',
+        cover: 'http://example.com/cover.jpg',
+        title: 'Film Title',
+        about: 'About the film',
+        description: 'Description of the film',
+        schedule: [],
+      };
+
+      (service.getNewFilm as jest.Mock).mockResolvedValue(filmEntity);
+
+      const result = await controller.createFilm(filmEntity);
+
+      expect(result).toEqual(filmEntity);
+      expect(service.getNewFilm).toHaveBeenCalledWith(filmEntity);
+    });
   });
 });

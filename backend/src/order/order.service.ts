@@ -77,7 +77,7 @@ export class OrderService {
       try {
         await this.filmsRepository.updateFilm(film);
       } catch (error) {
-        new ConflictException(
+        throw new ConflictException(
           'Возникла ошибка при обновлении данных в таблице',
         );
       }

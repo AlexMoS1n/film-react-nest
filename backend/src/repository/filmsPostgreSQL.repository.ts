@@ -54,8 +54,7 @@ export class FilmsPostgreSQLRepository {
         `Фильм с таким названием  '${film.title}' уже существует`,
       );
     }
-    await this.filmRepository.insert(film);
-    return film;
+    return this.filmRepository.save(film);
   }
 
   async updateFilm(film: FilmEntity): Promise<void> {
