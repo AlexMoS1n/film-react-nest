@@ -39,6 +39,7 @@ export const Default: Story = {
             day: 'Wednesday',
             time: '12:00',
         },
-    ]
+    ],
+    selected: ''
   },
 };
