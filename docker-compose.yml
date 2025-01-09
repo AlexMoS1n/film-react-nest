@@ -1,8 +1,6 @@
 services:
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    image: ghcr.io/alexmos1n/film-react-nest/backend:latest
     container_name: backend
     depends_on:
       - postgres
@@ -13,9 +11,7 @@ services:
     restart: unless-stopped
 
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    image: ghcr.io/alexmos1n/film-react-nest/frontend:latest
     container_name: frontend
     networks:
       - postgres_network
