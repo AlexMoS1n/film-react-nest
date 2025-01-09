@@ -62,7 +62,7 @@ services:
   certbot:
     image: certbot/certbot:latest
     networks:
-      - webnet
+      - postgres_network
     volumes:
       - ./certbot/www/:/var/www/certbot/:rw
       - ./certbot/conf/:/etc/letsencrypt/:rw
