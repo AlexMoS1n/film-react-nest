@@ -19,12 +19,7 @@ export class FilmsService {
   }
 
   async getScheduleFilm(id: string) {
-    let film;
-    if (this.filmsRepository instanceof FilmsMongoDBRepository) {
-      film = (await this.filmsRepository.findFilmById(id)).toObject();
-    } else {
-      film = await this.filmsRepository.findFilmById(id);
-    }
+    const film = await this.filmsRepository.findFilmById(id);
     return {
       total: film.schedule.length,
       items: film.schedule,
@@ -32,16 +27,12 @@ export class FilmsService {
   }
 
   async getNewFilm(data: CreateFilmDTO | FilmEntity) {
-    if (
-      this.filmsRepository instanceof FilmsMongoDBRepository &&
-      data instanceof CreateFilmDTO
-    ) {
-      this.filmsRepository.createNewFilm(data);
-    } else if (
-      this.filmsRepository instanceof FilmsPostgreSQLRepository &&
-      data instanceof FilmEntity
-    ) {
-      this.filmsRepository.createNewFilm(data);
+    if (this.filmsRepository instanceof FilmsMongoDBRepository) {
+      const filmData: CreateFilmDTO = data as CreateFilmDTO;
+      return await this.filmsRepository.createNewFilm(filmData);
+    } else {
+      const filmData: FilmEntity = data as FilmEntity;
+      return await this.filmsRepository.createNewFilm(filmData);
     }
   }
 }
