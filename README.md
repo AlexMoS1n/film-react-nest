@@ -54,4 +54,6 @@ npm ci
 docker compose up -d --build  
 ```
 4. По адресу `http://localhost:8080/` будет доступна PGAdmin. Авторизуйтесь в ней (email, password из `.env` `pgadmin-settings/`). Далее создайте сервер и настройте параметры на вкладке Connection (Host, Maintenance database, Username, Password из `.env` `backend/`)  
-5. Готовое приложение будет доступно по адресу `http://localhost/`.   
+5. Готовое приложение будет доступно по адресу `http://localhost/`.
+
+Примечание: В корне проекта располагаются файлы `docker-composeForServer.yml.example` и `docker-composeForServer.yml.example` - это конфигурационные файлы соответсвенно `docker-compose.yml` и `docker-compose.yml`, которые использрвались для онлайн-сервиса [alexm.students.nomorepartiesco.ru](https://alexm.students.nomorepartiesco.ru/) с применением SSL сертификата.
