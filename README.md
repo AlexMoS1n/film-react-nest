@@ -21,7 +21,7 @@
 9. :white_check_mark: Реализована проверка работы логгеров, контролеров и сервисов приложения по средствам Jest тестов
 10. :white_check_mark: Настроен Docker приложения, бэкенд и фронт Docker образы вынесены в GitHub Registry, которые при новых пушах проекта вновь собираются и публикуются в GitHub Registry.
 11. :white_check_mark: Настроен удаленный сервер, прикреплено доменное имя и выполнен деплой проекта
-12. :white_check_mark: Выпущен SSL сертификат, настроено подключение к сайту по https - [alexm.students.nomorepartiesco.ru](https://alexm.students.nomorepartiesco.ru/).
+12. :white_check_mark: Выпущен SSL сертификат, настроено подключение к сайту по https.
 
 ## Установка
 Установка и запуск проект осуществляется двумя способами - локально или через Docker
@@ -56,4 +56,4 @@ docker compose up -d --build
 4. По адресу `http://localhost:8080/` будет доступна PGAdmin. Авторизуйтесь в ней (email, password из `.env` `pgadmin-settings/`). Далее создайте сервер и настройте параметры на вкладке Connection (Host, Maintenance database, Username, Password из `.env` `backend/`)  
 5. Готовое приложение будет доступно по адресу `http://localhost/`.
 
-Примечание: В корне проекта располагаются файлы `docker-composeForServer.yml.example` и `docker-composeForServer.yml.example` - это конфигурационные файлы соответсвенно `docker-compose.yml` и `docker-compose.yml`, которые использрвались для онлайн-сервиса [alexm.students.nomorepartiesco.ru](https://alexm.students.nomorepartiesco.ru/) с применением SSL сертификата.
+Примечание: В корне проекта располагаются файлы `docker-composeForServer.yml.example` и `docker-composeForServer.yml.example` - это конфигурационные файлы соответсвенно `docker-compose.yml` и `docker-compose.yml`.
